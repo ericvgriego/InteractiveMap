@@ -32,4 +32,926 @@
 		</div>
   
 </body>
+
 </html>
+
+<css>
+	body {
+    color:#08192B;
+    font:400 15px/22px 'Fjalla One', 'Oswald';
+    margin:0;
+    padding:0;
+    -webkit-font-smoothing:antialiased;
+  }
+  * {
+    -webkit-box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    box-sizing:border-box;
+  }
+  h1 {
+    font-size:22px;
+    margin:0;
+    font-weight:700;
+    color:#5EC6C7;
+  }
+  a {
+    color:#404040;
+    text-decoration:none;
+  }
+  a:hover { color:#101010; }
+
+  .sidebar {
+    position:absolute;
+    width:33.3333%;
+    height:100%;
+    top:0;left:0;
+    overflow:hidden;
+    border-right:1px solid rgba(0,0,0,0.25);
+  }
+  .pad2 {
+    padding:20px;
+  }
+  .quiet {
+    color:#888;
+  }
+  .map {
+    position:absolute;
+    left:33.3333%;
+    width:66.6666%;
+    top:0;bottom:0;
+  }
+  .heading {
+    background:#08192B;
+    border-bottom:1px solid #eee;
+    height:60px;
+    line-height:60px;
+    padding:0 10px;
+  }
+  .listings {
+    height:100%;
+    overflow:auto;
+    padding-bottom:60px;
+  }
+  .listings .item {
+    display:block;
+    border-bottom:1px solid #eee;
+    padding:10px;
+    text-decoration:none;
+  }
+  .listings .item:last-child { border-bottom:none; }
+  .listings .item .title {
+    display:block;
+    color:#0E1727;
+    font-weight:400;
+  }
+  .listings .item .title small { font-weight:400; }
+  .listings .item.active .title,
+  .listings .item .title:hover { color:#5EC6C7; }
+  .listings .item.active {
+    background-color:#f8f8f8;
+  }
+
+  ::-webkit-scrollbar {
+    width:3px;
+    height:3px;
+    border-left:0;
+    background:rgba(0,0,0,0.1);
+  }
+  ::-webkit-scrollbar-track {
+    background:none;
+  }
+  ::-webkit-scrollbar-thumb {
+    background:#5EC6C7;
+    border-radius:0;
+  }
+
+  .clearfix { display:block; }
+  .clearfix:after {
+    content:'.';
+    display:block;
+    height:0;
+    clear:both;
+    visibility:hidden;
+  }
+
+  /* Marker tweaks */
+  .leaflet-popup-close-button {
+    display:none;
+  }
+  .leaflet-popup-content {
+    font:400 15px/22px 'Source Sans Pro', 'Helvetica Neue', Sans-serif;
+    padding:0;
+    width:200px;
+  }
+  .leaflet-popup-content-wrapper {
+    padding:0;
+  }
+  .leaflet-popup-content h3 {
+    background:#91c949;
+    color:#fff;
+    margin:0;
+    display:block;
+    padding:10px;
+    border-radius:3px 3px 0 0;
+    font-weight:700;
+    margin-top:-15px;
+  }
+  .leaflet-popup-content div {
+    padding:10px;
+  }
+  .leaflet-container .leaflet-marker-icon { cursor:pointer; }
+
+
+
+
+body, h1 {
+	margin: 0;	
+}
+
+a {
+	text-decoration: none;
+	color: black;
+}
+.header {
+	width: 100%;
+  height: 10px;
+	text-align: center;
+	background-color: #3F51B5;
+	color: #eee;
+	padding: 200px 0;
+	position: relative;
+	z-index: -1;
+}
+.header>h1 {
+	font-weight: 400;
+	font-size: 64px;
+}
+.floating-item-container {
+	position: absolute;
+	width: 200px;
+	margin: 0 auto;
+	height: 200px;
+	bottom: 10px;
+  right: 10px;
+}
+.button-container {
+	height: 100%;
+	position: relative;
+	overflow: hidden;
+}
+.button-container>.btn {
+	transition: all 0.5s;
+	max-width: 1000px;
+	max-height: 1000px;
+	position: absolute;
+	right: 0;
+	bottom: 0;
+}
+.btn-float {
+  width: 55.5px;
+  height: 55.5px;
+  background: #0E1727;
+  border: none;
+  outline: 0;
+  border-radius: 50%;
+  color: #eee;
+  text-align: center;
+  letter-spacing: 0.5px;
+  padding: 0;
+  line-height: 56px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+.btn-float i {
+  font-size: 1.6rem;
+}
+.button-container.open>.btn:before {
+	display: none;
+}
+.modal {
+	z-index: 20;
+	display: none;
+	position: relative;
+	top: -100%;
+	width: 100%;
+	height: 100%;
+	color: #eee;
+	background-color: #FF4081;
+	box-shadow: 0px 2px 5px rgba(0,0,0,0.4);
+}
+.modal>.close {
+	display: inline-block;
+  position: relative;
+  margin: 10px;
+  right: 10px;
+	width: 100%;
+  text-align: right;
+  float: right;
+  font-size: 1.6rem;
+	line-height: 37px;	
+	color: rgba(0,0,0,0.37);
+}
+.modal>.close:hover {
+	cursor: pointer;
+}
+.modal>.modal-content {
+	width: 100%;
+	height: 100%;
+	padding: 10px;
+}
+.modal>.modal-content>h3 {
+  font-size: 52px;
+	text-align: center;
+	padding-top: 150px;
+}
+@-webkit-keyframes slide {
+	0% {width:70px;height: 56px;}
+	5% {width:100px;height: 56px;margin-right:20%;}
+	10% {width:130px;height: 56px;margin-right:30%;}
+	20% {width:70px;height: 56px;margin-right:40%;}
+	25% {width:56px;height: 56px;margin-bottom:0px;margin-right:40%;}
+	100%{width:200%;height:200%;margin-bottom:-50%;margin-right:-40%;}
+}
+.slide {
+	position: relative;
+	-webkit-animation-name: slide;
+  -webkit-animation-duration: 1s;
+	-webkit-animation-fill-mode: forwards;
+}
+</css>
+
+<javascript>
+	  
+
+
+
+L.mapbox.accessToken = 'pk.eyJ1Ijoidml2aXBoeSIsImEiOiJjaWZteXg4dGszYXN6c3ZrcWJzeTBreW03In0.aOQnkC3AzdyK2F6tnjZ5UQ';
+
+var geojson = [
+  
+      {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                -96.800530,
+                32.788234
+              ]
+            },
+            "properties": {
+"name": "Nasher Cafe",
+              
+"About": "Sandwich and soup by Wolfgang Puck at Dallas's premiere sculpture center",
+              
+"Desc": "A bonus at this spot is besides slightly upscale and fresh picks from the restaurant, you are also able to enjoy a spectacular view of the Nasher Sculpture Center while you chow down on your pear and Brie sandwich with French double cream Brie, Asian pear, baby arugula, grain mustard, and local honey. It’s a lesser-known spot, but well worth sneaking away for a tranquil lunch.",
+              "phoneFormatted": "Lunch",
+              "phone": "2022347336",
+              "address": "2001 Flora St",
+              "city": "Dallas",
+              "country": "United States",
+              "crossStreet": "N Harwood St & Flora St",
+              "postalCode": "75201",
+              "state": "TX"
+            }
+          }
+          
+          
+        ]
+      }
+      ,
+
+      {
+
+
+            
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                -96.7926565,
+                32.7818514
+              ]
+            },
+            "properties": {
+"name": "Metropolitan Cafe",
+              
+"About": "Greek salad or crab cakes",
+              
+"Desc": "Lunch should be quick, simple, really good, and cheap. It’s a no-frills meal that you don’t want to spend a lot of time and energy on. At Metropolitan Café, you get the best of all of these qualities -- clean, fresh, simple food that powers you through the day. The Greek salad has feta, tomato, onion, olives, cucumbers, and Greek dressing and make sure to grab an order of crab cakes on Wednesday. The best part about this place is you can grab some caffeine before you go to power through the last few hours of work.",
+              "phoneFormatted": "Lunch",
+              "phone": "2022347336",
+              "address": "2032 Main St",
+              "city": "Dallas",
+              "country": "United States",
+              "crossStreet": "S Pearl & Main St",
+              "postalCode": "75201",
+              "state": "TX"
+            }
+          }
+          
+          
+        ]},
+      
+            {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                -96.7904697,
+                32.7683007
+              ]
+            },
+
+
+            "properties": {
+"name": "Lee Harvey's",
+              
+"About": "Classic Burger & Fries All-American Dive Bar",
+              
+"Desc": "One of the diviest dive bars in all of Dallas also serves up some pretty solid food. If it’s my 10 bucks here,I’m going with a good old-fashioned burger and adding cheese, bacon, a side of fries, maybe onion rings, maybe a half order of each, the sky's the limit! Also, depending on how late you sneak away for lunch, it's happy hour starts at 3pm… so maybe you can stretch it out for a two-for.",
+              "phoneFormatted": "Lunch",
+              "phone": "2022347336",
+              "address": "1807 Gould St",
+              "city": "Dallas",
+              "country": "United States",
+              "crossStreet": "Gould St & Beaumont St",
+              "postalCode": "75201",
+              "state": "TX"
+            }
+          }
+          
+          
+        ]
+      }
+      ,
+  {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                -96.804775,
+                32.775899
+              ]
+            },
+
+
+            "properties": {
+"name": "Texas Spice",
+              
+"About": "Farm-to-table regional fare in a stylish setting at the Omni with repurposed woods & skyline views",
+              
+"Desc": "Beyond plating insanely tempting, locally inspired dishes, this reclaimed brick & wood 300-seater is composting, replacing bottled water with a Natura filtration system that offers both sparkling & still, and even channeling rainwater to be the sole moisture source for the trees on the sizable patio, where you'll also find the Pearlmans, who'd never miss a fun patio party, even during their trial separation!...er, a huge limestone fireplace.",
+              "phoneFormatted": "Lunch",
+              "phone": "2022347336",
+              "address": "555 S Lamar St",
+              "city": "Dallas",
+              "country": "United States",
+              "crossStreet": "S Market & Young St",
+              "postalCode": "75201",
+              "state": "TX"
+            }
+          }
+          
+          
+        ]
+      },
+  {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                -96.8018889,
+                32.7858125
+              ]
+            },
+
+
+            "properties": {
+"name": "Pyramid Resturant & Bar",
+              
+"About": "Upscale spot in sleek Fairmont Hotel featuring a New American menu enhanced by rooftop-garden herbs.",
+              
+"Desc": "The Pyramid is a classy joint (don't touch the crazy tree-art!) where you can enjoy locally sourced cuisine and the quiet comfort of The Fairmont Dallas's upscale vibe. Plus complimentary valet parking. They've got a killer brunch, with everything from Croque Madames to huevos rancheros, cornering the market on Franco-Mex (Mexi-French? Frenchican?) weekend midday hybrid-meal dining.",
+              "phoneFormatted": "Lunch",
+              "phone": "2022347336",
+              "address": "1717 N Akard St",
+              "city": "Dallas",
+              "country": "United States",
+              "crossStreet": "S Market & Young St",
+              "postalCode": "75201",
+              "state": "TX"
+            }
+          }
+          
+          
+        ]
+      },
+  
+  {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                -96.8006688,
+                32.7850244
+              ]
+            },
+
+
+            "properties": {
+"name": "Dakota's",
+              
+"About": "Subterranean seafood & steakhouse with a garden waterfall view & luxe New Orleans-style ambiance.",
+              
+"Desc": "The sultry, subterranean steak cavern's slinging their vaunted meat (from the 24oz porterhouse to the 8oz buffalo tenderloin), as well as more delicate items like steamed grouper wrapped in banana leaf.",
+              "phoneFormatted": "Lunch",
+              "phone": "2022347336",
+              "address": "600 N Akard St",
+              "city": "Dallas",
+              "country": "United States",
+              "crossStreet": "S Market & Young St",
+              "postalCode": "75201",
+              "state": "TX"
+            }
+          }
+          
+          
+        ]
+      },
+  
+  {
+
+
+            
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                -96.7998585,
+                32.7799492
+              ]
+            },
+            "properties": {
+"name": "The French Room",
+              
+"About": "Destination French fine dining amid rococo decor in the historic, luxe Hotel Adolphus.",
+              
+"Desc": "It's not often you get a dining experience so top notch from beginning to end that superlatives do not seem enough.  The French Room is that restaurant.  You cannot beat the stunningly beautiful atmosphere and gracious service.",
+              "phoneFormatted": "Lunch",
+              "phone": "2022347336",
+              "address": "1321 Commerce St",
+              "city": "Dallas",
+              "country": "United States",
+              "crossStreet": "S Pearl & Main St",
+              "postalCode": "75201",
+              "state": "TX"
+            }
+          }
+          
+          
+        ]},
+  
+  {
+
+
+            
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                -96.80967,
+                32.7760106
+              ]
+            },
+            "properties": {
+"name": "Five Sixty by Wolfgang Puck",
+              
+"About": "Celebrity chef's counter-serve chain offering signature pizzas, sandwiches & other light fare.",
+              
+"Desc": "The Reunion Tower's Five Sixty boasts a total view of Dallas as a revolving floor takes you in 360-degree circles while Wolfgang Puck pushes you East with his modern take on Asian cuisine. Enjoy fine-dining or a more casual experience in one of two bars at the location.",
+              "phoneFormatted": "Lunch",
+              "phone": "2022347336",
+              "address": "300 Reunion Blvd E",
+              "city": "Dallas",
+              "country": "United States",
+              "crossStreet": "S Pearl & Main St",
+              "postalCode": "75201",
+              "state": "TX"
+            }
+          }
+          
+          
+        ]},
+  
+  {
+
+
+            
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                -96.8000556,
+                32.7802056
+              ]
+            },
+            "properties": {
+"name": "City Tavern",
+              
+"About": "Down-to-earth hangout with pub grub, drink specials, late-night hours & live music by local bands.",
+              
+"Desc": "This is one of the oldest taverns in Dallas, formerly owned by Jack Ruby. The bar staff and servers are nice, helpful and can provide recommendations on the menu. Drinks were well made and the prices affordable.",
+              "phoneFormatted": "Lunch",
+              "phone": "2022347336",
+              "address": "1402 Main St",
+              "city": "Dallas",
+              "country": "United States",
+              "crossStreet": "S Pearl & Main St",
+              "postalCode": "75201",
+              "state": "TX"
+            }
+          }
+          
+          
+        ]},
+  {
+
+
+            
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                -96.7983584,
+                32.7806186
+              ]
+            },
+            "properties": {
+"name": "Midnight Rambler",
+              
+"About": "Chic underground cocktail lounge in the Joule Hotel, offering drinks both savory & sweet.",
+              
+"Desc": "Just a few steps from the Joule Hotel lobby hangs a bright neon sign that reads, 'COCKTAILS'. Go there. Two flights of stairs down, and you’re in cocktail heaven. Chad Solomon and Christy Pope of beverage consulting group Cuffs & Buttons are the masterminds behind the cocktail menu, and it’s nothing short of amazing Try the shared Hogo A-Go-Go punch for four, made with Jamaica rum, lime, West Indian bay leaf falernum, hibiscus, and nutmeg.",
+              "phoneFormatted": "Lunch",
+              "phone": "2022347336",
+              "address": "1530 Main St",
+              "city": "Dallas",
+              "country": "United States",
+              "crossStreet": "S Pearl & Main St",
+              "postalCode": "75201",
+              "state": "TX"
+            }
+          }
+          
+          
+        ]},
+  
+  {
+
+
+            
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                -96.7918356,
+                32.778673
+              ]
+            },
+            "properties": {
+"name": "Green Door Public House",
+              
+"About": "A historic former bank building now hosts a bar & restaurant serving hearty American cuisine.",
+              
+"Desc": "Dallas may have a reputation for being a 'tear down' city, but an exception was made for this historic building built in the late 1800s. Instead of tearing it down, it was moved, brick-by-brick, a few blocks South, and is now home to Green Door Public House. Every window is filled with views of the skyline and the patio is spacious for Downtown.",
+              "phoneFormatted": "Lunch",
+              "phone": "2022347336",
+              "address": "600 S Hardwood St",
+              "city": "Dallas",
+              "country": "United States",
+              "crossStreet": "S Pearl & Main St",
+              "postalCode": "75201",
+              "state": "TX"
+            }
+          }
+          
+          
+        ]},
+  
+  {
+
+
+            
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                -96.7817172,
+                32.7807859
+              ]
+            },
+            "properties": {
+"name": "Deep Ellum Brewing Co.",
+              
+"About": "Quirky craft brewery hosting public tours & laid-back events, with food trucks outside.",
+              
+"Desc": "They make (DELICIOUS) beer, and they do a really freaking good job of it. Also, they lead tours and host beer-ific events.",
+              "phoneFormatted": "Lunch",
+              "phone": "2022347336",
+              "address": "2823 St Louis St",
+              "city": "Dallas",
+              "country": "United States",
+              "crossStreet": "S Pearl & Main St",
+              "postalCode": "75201",
+              "state": "TX"
+            }
+          }
+          
+          
+        ]},
+  
+  {
+
+
+            
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                -96.7984256,
+                32.7978449
+              ]
+            },
+            "properties": {
+"name": "Parliament",
+              
+"About": "Bartenders mix drinks from a menu of over 100 craft cocktails at this plush, dimly lit lounge.",
+              
+"Desc": "Dallas drinkers might recognize Eddie “Lucky” Campbell’s signature fedora behind a bar just as easily as they would one of the impressive cocktails from the mixologist who's shaken behind the bar at spots like The Mansion and Abicus. Now, teamed up with partner Andrew Brimecome, the drinks may be harder to recognize, because Lucky’s put together a bound book of 125 that you’ll never drink your way through. But you should certainly take a seat in the bordello-style, red-lit downtown den and start trying. Killin’ Thyme -- his signature concoction of gin, cucumber, lemon, thyme, and watermelon ice -- is a great place to start.",
+              "phoneFormatted": "Lunch",
+              "phone": "2022347336",
+              "address": "2418 Allen St",
+              "city": "Dallas",
+              "country": "United States",
+              "crossStreet": "S Pearl & Main St",
+              "postalCode": "75201",
+              "state": "TX"
+            }
+          }
+          
+          
+        ]},
+  
+  {
+
+
+            
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                -96.773746,
+                32.785122
+              ]
+            },
+            "properties": {
+"name": "Doulbe Wide Bar",
+              
+"About": "Welcoming neighborhood bar serving beer & cocktails enhanced by DJs & live music.",
+              
+"Desc": "Some bar had to do it, some bar in Dallas had to step up and be as pretentious as everyone thinks we are already. Luckily Double Wide stepped up to the plate and fell on that sword, and of course, if you have actually been to Double Wide, you know NONE OF THAT IS TRUE. One of the most iconic and laid-back bars in Dallas, Double Wide brings you instant-classic cocktails like the Yoohoo Yeehaw and Twisted Tang. There’s great live music and if you like your women, and your venue, a little on the trashy side, make sure to make Double Wide a staple.",
+              "phoneFormatted": "Lunch",
+              "phone": "2022347336",
+              "address": "3510 Commerce St",
+              "city": "Dallas",
+              "country": "United States",
+              "crossStreet": "S Pearl & Main St",
+              "postalCode": "75201",
+              "state": "TX"
+            }
+          }
+          
+          
+        ]},
+  
+  {
+
+
+            
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                -96.808285,
+                32.785068
+              ]
+            },
+            "properties": {
+"name": "House of Blues Dallas",
+              
+"About": "Rock- & blues-themed chain with Southern dishes such as po' boys & jambalaya, plus live music.",
+              
+"Desc": "Say what you will about their corporate 'cookie-cutter eclectic' venues -- House of Blues is a fine place to catch established bands on their stop in Dallas. The standing room is ample, but avoid getting pushed too far under the balcony if you want to see much of the stage. There isn’t a bad seat from the balcony if you pony up the extra cash, and if it’s open to the masses, check out the Foundation Room afterwards. Decorated in soft textures of from the far east, it feels fit to be an emperor's opium den circa 1800.",
+              "phoneFormatted": "Lunch",
+              "phone": "2022347336",
+              "address": "2200 N Lamar St",
+              "city": "Dallas",
+              "country": "United States",
+              "crossStreet": "S Pearl & Main St",
+              "postalCode": "75201",
+              "state": "TX"
+            }
+          }
+          
+          
+        ]},
+  
+  {
+
+
+            
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                -96.7965959,
+                32.7681799
+              ]
+            },
+            "properties": {
+"name": "Poor David's Pub",
+              
+"About": "Rock- & blues-themed chain with Southern dishes such as po' boys & jambalaya, plus live music.",
+              
+"Desc": "Say what you will about their corporate 'cookie-cutter eclectic' venues -- House of Blues is a fine place to catch established bands on their stop in Dallas. The standing room is ample, but avoid getting pushed too far under the balcony if you want to see much of the stage. There isn’t a bad seat from the balcony if you pony up the extra cash, and if it’s open to the masses, check out the Foundation Room afterwards. Decorated in soft textures of from the far east, it feels fit to be an emperor's opium den circa 1800.",
+              "phoneFormatted": "Lunch",
+              "phone": "2022347336",
+              "address": "1313 S Lamar St",
+              "city": "Dallas",
+              "country": "United States",
+              "crossStreet": "S Pearl & Main St",
+              "postalCode": "75201",
+              "state": "TX"
+            }
+          }
+          
+          
+        ]},
+    
+];
+   
+
+      var map = L.mapbox.map('map', 'viviphy.nmc0lfmo', {attributionControl: false})
+        .setView([32.779518, -96.802112], 16);
+
+      map.scrollWheelZoom.disable();
+
+
+      var listings = document.getElementById('listings');
+      var locations = L.mapbox.featureLayer().addTo(map);
+
+      locations.setGeoJSON(geojson);
+
+      function setActive(el) {
+        var siblings = listings.getElementsByTagName('div');
+        for (var i = 0; i < siblings.length; i++) {
+          siblings[i].className = siblings[i].className
+            .replace(/active/, '').replace(/\s\s*$/, '');
+        }
+
+        el.className += ' active';
+      }
+
+      locations.eachLayer(function(locale) {
+
+        // Shorten locale.feature.properties to just `prop` so we're not
+    // writing this long form over and over again.
+    var prop = locale.feature.properties;
+
+    // Each marker on the map.
+    var popup = '<h3>Sweetgreen</h3><div>' + prop.address;
+
+    var listing = listings.appendChild(document.createElement('div'));
+    listing.className = 'item';
+
+    var link = listing.appendChild(document.createElement('a'));
+    link.href = '#';
+    link.className = 'title';
+
+    link.innerHTML = prop.name;
+    if (prop.crossStreet) {
+      link.innerHTML += '<br /><small class="quiet">' + prop.address + '</small>';
+      popup += '<br /><small class="quiet">' + prop.crossStreet + '</small>';
+    }
+
+    var details = listing.appendChild(document.createElement('div'));
+    details.innerHTML = prop.About;
+    if (prop.phone) {
+      details.innerHTML;
+    }
+
+    link.onclick = function() {
+      setActive(listing);
+
+      // When a menu item is clicked, animate the map to center
+      // its associated locale and open its popup.
+      map.setView(locale.getLatLng(), 16);
+      locale.openPopup();
+      return false;
+    };
+
+    // Marker interaction
+    locale.on('click', function(e) {
+      // 1. center the map on the selected marker.
+      map.panTo(locale.getLatLng());
+
+      // 2. Set active the markers associated listing.
+      setActive(listing);
+    });
+
+    popup += '</div>';
+    locale.bindPopup(popup);
+
+    locale.setIcon(L.icon({
+      iconUrl: 'http://icon-park.com/imagefiles/location_map_pin_navy_blue5.png',
+      iconSize: [35, 45],
+      iconAnchor: [28, 28],
+      popupAnchor: [0, -34]
+    }));
+
+});
+
+
+
+
+///button modal
+
+$(function() {
+	$('body').on('click', '.btn-float', function(event) {
+		event.preventDefault();
+		var ele = $(this);
+		$(this).parent().addClass('open');
+		$(this).addClass('slide');
+		setTimeout(function() {
+			ele.parent().siblings().fadeIn();
+			setTimeout(function() {
+				ele.parent().removeClass('open');
+				ele.removeClass('slide');
+			}, 500)
+		}, 600);
+	});
+
+	$('body').on('click', '.close', function(event) {
+		event.preventDefault();
+		$(this).parent().fadeOut();
+	});
+});
+	
+</javascript>
